@@ -7,18 +7,23 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function news () {
+    public function news()
+    {
 
         return view('news.all', ['news' => News::$news]);
 
     }
 
-    public function category () {
+
+
+    public function category()
+    {
         return view('news.category', ['categories' => News::$categories]);
     }
 
 
-    public function newsOne ($id) {
+    public function newsOne($id)
+    {
         if (array_key_exists($id, News::$news))
             return view('news.one', ['news' => News::$news[$id]]);
         else
@@ -26,7 +31,8 @@ class NewsController extends Controller
 
     }
 
-    public function categoryId ($id) {
+    public function categoryId($id)
+    {
         $news = [];
 
         foreach (News::$categories as $item) {
