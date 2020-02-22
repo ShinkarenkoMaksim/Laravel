@@ -14,12 +14,16 @@ class News extends Model
     public function getNews()
     {
         $this->news = json_decode(Storage::get('news.txt'), true);
+        if (is_null($this->news))
+            $this->news = [];
         return $this->news;
     }
 
     public function getCategories(){
 
         $this->categories = json_decode(Storage::get('categories.txt'), true);
+        if (is_null($this->categories))
+            $this->categories = [];
         return $this->categories;
     }
 }

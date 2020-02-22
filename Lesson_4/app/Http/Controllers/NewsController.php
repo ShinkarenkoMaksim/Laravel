@@ -9,10 +9,7 @@ class NewsController extends Controller
 {
     public function news(News $news)
     {
-        //dd($news->getNews());
-
         return view('news.all', ['news' => $news->getNews()]);
-
     }
 
 
@@ -35,14 +32,11 @@ class NewsController extends Controller
     public function categoryId($id, News $newsCl)
     {
         $news = [];
-
-
         foreach ($newsCl->getCategories() as $item) {
             if ($item['url'] == $id) $id = $item['id'];
         }
 
         if (array_key_exists($id, $newsCl->getCategories())) {
-
             $name = $newsCl->getCategories()[$id]['name'];
             foreach ($newsCl->getNews() as $item) {
                 if ($item['category'] == $id)
@@ -53,7 +47,6 @@ class NewsController extends Controller
             return redirect(route('news.categories'));
         }
     }
-
 }
 
 

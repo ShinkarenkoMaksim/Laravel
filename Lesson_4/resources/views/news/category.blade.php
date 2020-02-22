@@ -16,7 +16,8 @@
         </li>
 
     @empty
-        <p>Нет новостей</p>
+        <p>Нет категорий</p>
+
     @endforelse
     </ul>
 @endsection

@@ -20,7 +20,10 @@ class IndexController extends Controller
             $request->flash();
             $news = $newsCl->getNews();
             $newsOne = $request->except("_token");
-            $newsOne['id'] = end($news)['id'] + 1;
+            if (array_key_exists('id', end($news)))
+                $newsOne['id'] = end($news)['id'] + 1;
+            else
+                $newsOne['id'] = 1;
             if (!array_key_exists( 'isPrivate', $newsOne))
                 $newsOne['isPrivate'] = false;
             $news[] = $newsOne;

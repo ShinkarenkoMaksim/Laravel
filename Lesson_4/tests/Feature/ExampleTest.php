@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\News;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 class ExampleTest extends TestCase
 {
@@ -12,10 +14,16 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testAddNews()
     {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response = $this->json('POST','/admin/addNews', [
+                "category" => 2,
+                "title" => "НовтостьТест",
+                "text" => "lorem ipsum"
+        ]);
+
+        $response->assertRedirect('/admin/addNews');
+        Storage::disk('local')->assertExists('news.txt');
     }
 }
