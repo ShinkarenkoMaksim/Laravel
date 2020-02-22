@@ -7,42 +7,44 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function news()
+    public function news(News $news)
     {
+        //dd($news->getNews());
 
-        return view('news.all', ['news' => News::$news]);
+        return view('news.all', ['news' => $news->getNews()]);
 
     }
 
 
 
-    public function category()
+    public function category(News $news)
     {
-        return view('news.category', ['categories' => News::$categories]);
+        return view('news.category', ['categories' => $news->getCategories()]);
     }
 
 
-    public function newsOne($id)
+    public function newsOne($id, News $news)
     {
-        if (array_key_exists($id, News::$news))
-            return view('news.one', ['news' => News::$news[$id]]);
-        else
-            return redirect(route('news.all'));
+        if (array_key_exists($id, $news->getNews()))
+        return view('news.one', ['news' => $news->getNews()[$id]]);
+    else
+        return redirect(route('news.all'));
 
     }
 
-    public function categoryId($id)
+    public function categoryId($id, News $newsCl)
     {
         $news = [];
 
-        foreach (News::$categories as $item) {
+
+        foreach ($newsCl->getCategories() as $item) {
             if ($item['url'] == $id) $id = $item['id'];
         }
 
-        if (array_key_exists($id, News::$categories)) {
+        if (array_key_exists($id, $newsCl->getCategories())) {
 
-            $name = News::$categories[$id]['name'];
-            foreach (News::$news as $item) {
+            $name = $newsCl->getCategories()[$id]['name'];
+            foreach ($newsCl->getNews() as $item) {
                 if ($item['category'] == $id)
                     $news[] = $item;
             }

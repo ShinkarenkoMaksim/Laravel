@@ -1,8 +1,6 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
-@section('title')
-    @parent Тест 1
-@endsection
+@section('title', 'Тест 1')
 
 @section('menu')
     @include('menu.admin')

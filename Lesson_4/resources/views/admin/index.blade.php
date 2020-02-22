@@ -1,15 +1,20 @@
 
 
-@extends('layouts.main')
+@extends('layouts.app')
 
-@section('title')
-    @parent Админка
-@endsection
+@section('title', 'Админка')
 
 @section('menu')
     @include('menu.admin')
 @endsection
 
 @section('content')
-    <h1>Добро пожаловать Admin!</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h1>Добро пожаловать Admin!</h1>
+            </div>
+        </div>
+    </div>
+
 @endsection

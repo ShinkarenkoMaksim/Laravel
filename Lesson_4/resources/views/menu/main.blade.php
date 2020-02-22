@@ -7,9 +7,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{{ route('news.all') }}">Новости</a>
-            <a class="nav-item nav-link" href="{{ route('news.categories') }}">Категории</a>
-            <a class="nav-item nav-link" href="{{ route('admin.admin') }}">Админка</a>
+            <a class="nav-item nav-link {{ request()->routeIs('news.all')?'active':'' }}" href="{{ route('news.all') }}">Новости</a>
+            <a class="nav-item nav-link {{ request()->routeIs('news.categories')?'active':'' }}" href="{{ route('news.categories') }}">Категории</a>
+            <a class="nav-item nav-link {{ request()->routeIs('news.admin')?'active':'' }}" href="{{ route('admin.admin') }}">Админка</a>
         </div>
     </div>
     </div>

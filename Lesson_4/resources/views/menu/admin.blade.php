@@ -7,10 +7,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" href="{{ route('admin.addNews') }}">Добавить новость</a>
-                <a class="nav-item nav-link" href="{{ route('admin.test1') }}">Тест1</a>
-                <a class="nav-item nav-link" href="{{ route('admin.test2') }}">Тест2</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.addNews')?'active':'' }}" href="{{ route('admin.addNews') }}">Добавить новость</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.test1')?'active':'' }}" href="{{ route('admin.test1') }}">text</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.test2')?'active':'' }}" href="{{ route('admin.test2') }}">json</a>
             </div>
         </div>
     </div>
 </nav>
+
