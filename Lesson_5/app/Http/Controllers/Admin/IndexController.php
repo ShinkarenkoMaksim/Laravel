@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\NewsController;
 use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
@@ -14,23 +16,18 @@ class IndexController extends Controller
         return view('admin.index');
     }
 
-    public function addNews(Request $request, News $newsCl)
+    public function addNews(Request $request, NewsController $newsCl)
     {
         if ($request->isMethod('POST')) {
             $request->flash();
-            $news = $newsCl->getNews();
             $newsOne = $request->except("_token");
-            if (array_key_exists('id', end($news)))
-                $newsOne['id'] = end($news)['id'] + 1;
-            else
-                $newsOne['id'] = 1;
-            if (!array_key_exists( 'isPrivate', $newsOne))
-                $newsOne['isPrivate'] = false;
-            $news[] = $newsOne;
-            Storage::put('news.txt', json_encode($news, JSON_UNESCAPED_UNICODE));
-            return redirect()->route('admin.addNews');
+            if (!array_key_exists( 'is_private', $newsOne))
+                $newsOne['is_private'] = false;
+            DB::table('news')->insert($newsOne);
+
+            return redirect()->route('news.all')->with('success', 'Новость добавлена');
         }
-        return view('admin.addNews', ['categories' => $newsCl->getCategories()]);
+        return view('admin.addNews', ['categories' => DB::table('categories')->get()]);
     }
 
     public function test1 () {

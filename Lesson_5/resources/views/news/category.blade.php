@@ -12,7 +12,7 @@
     @forelse($categories as $item)
 
         <li class="list-group-item">
-            <h2><a href="{{ route('news.categoryId',  $item['url']) }}">{{ $item['name'] }}</a></h2>
+            <h2><a href="{{ route('news.categoryId',  $item->url) }}">{{ $item->title }}</a></h2>
         </li>
 
     @empty

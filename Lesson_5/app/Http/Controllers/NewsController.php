@@ -4,48 +4,48 @@ namespace App\Http\Controllers;
 
 use App\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
-    public function news(News $news)
+    public function news()
     {
-        return view('news.all', ['news' => $news->getNews()]);
+        $news = DB::table('news')->get();
+
+        return view('news.all', ['news' => $news]);
     }
 
 
-
-    public function category(News $news)
+    public function categories()
     {
-        return view('news.category', ['categories' => $news->getCategories()]);
+        $categories = DB::table('categories')->get();
+
+        return view('news.category', ['categories' => $categories]);
     }
 
 
-    public function newsOne($id, News $news)
+    public function newsOne($id)
     {
-        if (array_key_exists($id, $news->getNews()))
-        return view('news.one', ['news' => $news->getNews()[$id]]);
-    else
-        return redirect(route('news.all'));
+        $news = DB::table('news')->find($id);
+        if (!empty($news))
+            return view('news.one', ['news' => $news]);
+
+        else
+            return redirect(route('news.all'));
 
     }
 
-    public function categoryId($id, News $newsCl)
+    public function categoryId($url)
     {
-        $news = [];
-        foreach ($newsCl->getCategories() as $item) {
-            if ($item['url'] == $id) $id = $item['id'];
-        }
-
-        if (array_key_exists($id, $newsCl->getCategories())) {
-            $name = $newsCl->getCategories()[$id]['name'];
-            foreach ($newsCl->getNews() as $item) {
-                if ($item['category'] == $id)
-                    $news[] = $item;
-            }
-            return view('news.oneCategory', ['news' => $news, 'category' => $name]);
-        } else {
+        $categories = DB::table('categories')->where('url', '=', $url)->get();
+        if (!empty($categories)) {
+            $category = $categories[0]->title;
+            $news = DB::table('news')->where('category_id', '=', $categories[0]->id)->get();
+            return view('news.oneCategory', ['news' => $news, 'category' => $category]);
+        } else
             return redirect(route('news.categories'));
-        }
+
+
     }
 }
 

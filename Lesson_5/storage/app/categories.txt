@@ -1,1 +1,0 @@
-{"1":{"id":1,"name":"Экономика","url":"economika"},"2":{"id":2,"name":"Политика","url":"politika"},"3":{"id":3,"name":"Спорт","url":"sport"},"4":{"id":4,"name":"Наука","url":"nauka"}}

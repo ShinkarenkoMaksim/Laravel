@@ -17,28 +17,36 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body id="app" class="d-flex flex-column h-100">
 
 
-    <header>
-        @yield('menu')
-    </header>
+<header>
+    @yield('menu')
+</header>
 
-    <main role="main" class="flex-shrink-0">
-        <div class="container">
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success alert-success fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @yield('content')
+    </div>
+</main>
 
-
-            @yield('content')
-        </div>
-    </main>
-
-    <footer class="footer mt-auto py-3">
-        <div class="container">
-            <span class="text-muted">&copy; Права защищены</span>
-        </div>
-    </footer>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">&copy; Права защищены</span>
+    </div>
+</footer>
 
 </body>
 </html>

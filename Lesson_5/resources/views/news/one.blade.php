@@ -7,9 +7,16 @@
 @endsection
 
 @section('content')
-    @if(!$news['isPrivate'])
-        <h2>{{ $news['title'] }}</h2>
-        <p>{{ $news['text'] }}</p>
+    @if(!$news->is_private)
+
+        <div class="card mt-4 ml-auto mr-auto" style="width: 50rem;">
+            <img src="{{ $news->img ? $news->img : asset('img/default.jpg') }}" class="card-img-top w-25 ml-auto mr-auto" alt="{{ $news->title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ $news->title }}</h5>
+                <p class="card-text">{{ $news->text }}</p>
+                <a href="{{ asset('/news/all') }}" class="btn btn-primary">Все новости</a>
+            </div>
+        </div>
 
     @else
         <br>Нет прав
