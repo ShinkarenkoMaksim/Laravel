@@ -21,9 +21,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
-<body id="app" class="d-flex flex-column h-100">
-
-
+<body class="h-100">
+<div id="app" class="d-flex flex-column h-100">
 <header>
     @yield('menu')
 </header>
@@ -47,6 +46,7 @@
         <span class="text-muted">&copy; Права защищены</span>
     </div>
 </footer>
+</div>
 
 </body>
 </html>

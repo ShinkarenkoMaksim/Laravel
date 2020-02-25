@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <form class="mt-4" action="{{ route('admin.addNews') }}" method="POST">
+    <form class="mt-4" action="{{ route('admin.addNews') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="newsTitle">Название новости</label>
@@ -34,6 +34,10 @@
             <label class="form-check-label" for="privateNews">
                 Приватная новость
             </label>
+        </div>
+        <div class="form-group mt-2">
+            <label for="img">Загрузите изображение</label>
+            <input name="img" type="file" class="form-control-file" id="img" accept="image/jpeg">
         </div>
         <button type="submit" class="btn btn-primary mt-3">Отправить</button>
     </form>

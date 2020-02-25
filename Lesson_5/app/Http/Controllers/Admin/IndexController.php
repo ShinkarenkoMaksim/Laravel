@@ -16,13 +16,19 @@ class IndexController extends Controller
         return view('admin.index');
     }
 
-    public function addNews(Request $request, NewsController $newsCl)
+    public function saveImg(Request $request) {
+        $path = $request->file('img')->store('public/img');
+        return stristr($path, '/');
+    }
+
+    public function addNews(Request $request)
     {
         if ($request->isMethod('POST')) {
             $request->flash();
             $newsOne = $request->except("_token");
             if (!array_key_exists( 'is_private', $newsOne))
                 $newsOne['is_private'] = false;
+            $newsOne['img'] = $this->saveImg($request);
             DB::table('news')->insert($newsOne);
 
             return redirect()->route('news.all')->with('success', 'Новость добавлена');
