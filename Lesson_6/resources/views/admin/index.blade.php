@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 
 @section('title', 'Админка')
@@ -15,6 +13,26 @@
                 <h1>Добро пожаловать Admin!</h1>
             </div>
         </div>
+    </div>
+
+    <div class="row row-cols-3">
+        @forelse($news as $item)
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ $item->title }}</h2>
+                    <a class="btn btn-primary" href="{{ route('news.one', $item) }}">Подробнее...</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.updateNews', $item) }}">Edit</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.deleteNews', $item) }}">Delete</a>
+
+                </div>
+            </div>
+
+        @empty
+            <p>Нет новостей</p>
+
+        @endforelse
+        {{ $news->links() }}
     </div>
 
 @endsection

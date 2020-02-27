@@ -9,7 +9,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link {{ request()->routeIs('news.all')?'active':'' }}" href="{{ route('news.all') }}">Новости</a>
             <a class="nav-item nav-link {{ request()->routeIs('news.categories')?'active':'' }}" href="{{ route('news.categories') }}">Категории</a>
-            <a class="nav-item nav-link {{ request()->routeIs('news.admin')?'active':'' }}" href="{{ route('admin.admin') }}">Админка</a>
+            <a class="nav-item nav-link {{ request()->routeIs('news.admin')?'active':'' }}" href="{{ route('admin.News') }}">Админка</a>
         </div>
     </div>
     </div>

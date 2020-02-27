@@ -10,7 +10,10 @@ class NewsController extends Controller
 {
     public function news()
     {
-        $news = DB::table('news')->get();
+        //$news = DB::table('news')->get();
+        $news = News::query()
+            ->where('is_private', false)
+            ->paginate(6);
 
         return view('news.all', ['news' => $news]);
     }
@@ -24,14 +27,10 @@ class NewsController extends Controller
     }
 
 
-    public function newsOne($id)
+    public function newsOne(News $news)
     {
-        $news = DB::table('news')->find($id);
-        if (!empty($news))
-            return view('news.one', ['news' => $news]);
-
-        else
-            return redirect(route('news.all'));
+        //$news = News::find($id);
+        return view('news.one', ['news' => $news]);
 
     }
 

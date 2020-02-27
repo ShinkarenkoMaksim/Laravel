@@ -9,11 +9,11 @@
 @endsection
 
 @section('content')
-    <form class="mt-4" action="{{ route('admin.addNews') }}" method="POST" enctype="multipart/form-data">
+    <form class="mt-4" action="@if(!$news->id){{ route('admin.addNews') }} @else {{ route('admin.saveNews', $news) }} @endif" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="newsTitle">Название новости</label>
-            <input name="title" type="text" class="form-control" id="newsTitle" placeholder="Название новости" value="{{ old('title') }}" required>
+            <input name="title" type="text" class="form-control" id="newsTitle" placeholder="Название новости" value="{{ $news->title ?? old('title') }}" required>
         </div>
         <div class="form-group">
             <label for="newsCategory">Категория новости</label>
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="newsText">Текст новости</label>
-            <textarea name="text" class="form-control" id="newsText" rows="15" required>{{ old('text') }}</textarea>
+            <textarea name="text" class="form-control" id="newsText" rows="15" required>{{ $news->text ?? old('text') }}</textarea>
         </div>
         <div class="form-check">
             <input @if (old('is_private')) checked @endif name="is_private" class="form-check-input" type="checkbox" value="1" id="privateNews">
@@ -39,6 +39,8 @@
             <label for="img">Загрузите изображение</label>
             <input name="img" type="file" class="form-control-file" id="img" accept="image/jpeg">
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+        <button type="submit" class="btn btn-primary mt-3">
+            @if($news->id) Изменить @else Добавить @endif
+        </button>
     </form>
 @endsection
