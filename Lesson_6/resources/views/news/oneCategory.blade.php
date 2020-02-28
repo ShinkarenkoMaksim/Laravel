@@ -14,7 +14,8 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h2 class="card-title">{{ $item->title }}</h2>
-                    <div class="card-img mb-3" style="background-image: url({{ $item->img ? $item->img : asset('img/default.jpg') }})"></div>
+                    <div class="card-img mb-3"
+                         style="background-image: url({{ $item->img ? asset('storage/' . $item->img) : asset('img/default.jpg') }})"></div>
                     @if(!$item->is_private)
                         <a class="btn btn-primary" href="{{ route('news.one', $item->id) }}">Подробнее...</a>
                     @endif
@@ -25,6 +26,7 @@
             <p>Нет новостей</p>
 
         @endforelse
+        {{ $news->links() }}
     </div>
 
 @endsection

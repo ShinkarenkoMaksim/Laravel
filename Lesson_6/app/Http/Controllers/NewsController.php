@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
     public function news()
     {
-        //$news = DB::table('news')->get();
         $news = News::query()
             ->where('is_private', false)
             ->paginate(6);
@@ -21,7 +20,7 @@ class NewsController extends Controller
 
     public function categories()
     {
-        $categories = DB::table('categories')->get();
+        $categories = Category::query()->get();
 
         return view('news.category', ['categories' => $categories]);
     }
@@ -36,15 +35,14 @@ class NewsController extends Controller
 
     public function categoryId($url)
     {
-        $categories = DB::table('categories')->where('url', '=', $url)->get();
-        if (!empty($categories)) {
+        $categories = Category::query()->select(['id', 'title'])->where('url', $url)->get();
+        if (!empty($categories[0])) {
             $category = $categories[0]->title;
-            $news = DB::table('news')->where('category_id', '=', $categories[0]->id)->get();
+            //$news = News::query()->where('category_id', $categories[0]->id)->paginate(6);
+            $news = Category::query()->find($categories[0]->id)->news()->paginate(6);
             return view('news.oneCategory', ['news' => $news, 'category' => $category]);
         } else
             return redirect(route('news.categories'));
-
-
     }
 }
 

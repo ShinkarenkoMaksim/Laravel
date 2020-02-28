@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
@@ -14,10 +14,10 @@ class NewsController extends Controller
         return view('admin.index', ['news' => $news]);
     }
 
-    public function update (Request $request, News $news) {
+    public function update (News $news) {
         return view('admin.addNews', [
             'news' => $news,
-            'categories' => DB::table('categories')->get()
+            'categories' => Category::query()->select('id', 'title')->get()
         ]);
     }
 
@@ -26,7 +26,7 @@ class NewsController extends Controller
         return stristr($path, '/');
     }
 
-    public function delete(Request $request, News $news)
+    public function delete(News $news)
     {
         $news->delete();
         return redirect()->route('admin.News')->with('success', 'Новость удалена');
@@ -58,7 +58,7 @@ class NewsController extends Controller
         }
         return view('admin.addNews', [
             'news' => $news,
-            'categories' => DB::table('categories')->get()
+            'categories' => Category::query()->select('id', 'title')->get()
         ]);
     }
 }

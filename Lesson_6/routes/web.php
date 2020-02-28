@@ -41,6 +41,7 @@ Route::group(
 }
 );
 
+//Route::resource('test', '/test')
 
 
 
