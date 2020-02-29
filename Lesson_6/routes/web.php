@@ -13,21 +13,27 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
+
+
 Route::group([
     'prefix' => 'admin',
     'namespace' => 'Admin',
     'as' => 'admin.'
 ], function () {
-    Route::get('/news', 'NewsController@all')->name('News');
+    //Route::get('/news', 'NewsController@all')->name('News');
     Route::match(['post','get'],'/addNews', 'NewsController@add')->name('addNews');
     Route::get('/updateNews{news}', 'NewsController@update')->name('updateNews');
     Route::post('/saveNews{news}', 'NewsController@save')->name('saveNews');
     Route::get('/deleteNews{news}', 'NewsController@delete')->name('deleteNews');
 
 
+
+
     Route::get('/test1', 'IndexController@test1')->name('test1');
     Route::get('/test2', 'IndexController@test2')->name('test2');
 });
+
+Route::resource('admin', 'Admin\NewsController');
 
 Route::group(
     [

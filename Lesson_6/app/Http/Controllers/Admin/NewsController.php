@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {
-    public function all() {
+    public function index() {
         $news = News::query()->paginate(6);
         return view('admin.index', ['news' => $news]);
     }
@@ -29,7 +29,7 @@ class NewsController extends Controller
     public function delete(News $news)
     {
         $news->delete();
-        return redirect()->route('admin.News')->with('success', 'Новость удалена');
+        return redirect()->route('admin.index')->with('success', 'Новость удалена');
     }
 
     public function save(Request $request, News $news) {
@@ -39,7 +39,7 @@ class NewsController extends Controller
                 $news->img = $this->saveImg($request);
             }
             $news->save();
-            return redirect()->route('admin.News')->with('success', 'Новость исправлена');
+            return redirect()->route('admin.index')->with('success', 'Новость исправлена');
         }
     }
 

@@ -24,7 +24,10 @@
                     <a class="btn btn-primary" href="{{ route('news.one', $item) }}">Подробнее...</a>
                     <a class="btn btn-secondary" href="{{ route('admin.updateNews', $item) }}">Edit</a>
                     <a class="btn btn-secondary" href="{{ route('admin.deleteNews', $item) }}">Delete</a>
-
+                    {{--<form action="{{ route('admin.destroy', $item->id) }}" method="POST">
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit">Удалить</button>
+                    </form>--}}
                 </div>
             </div>
 
