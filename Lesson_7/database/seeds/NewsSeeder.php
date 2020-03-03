@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\News;
 
 class NewsSeeder extends Seeder
 {
@@ -11,26 +12,7 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('news')->insert($this->getData());
+        factory(News::class, 10)->create();
     }
 
-    private function getData()
-    {
-        $faker = Faker\Factory::create('ru_RU');
-
-        $data = [];
-
-        for ($i = 0; $i < 20; $i++) {
-            $data[] = [
-                'title' => $faker->realText(rand(10, 20)),
-                'text' => $faker->realText(rand(1000, 2000)),
-                'is_private' => false,
-                'category_id' => $faker->numberBetween(1,4)
-            ];
-        }
-
-
-
-        return $data;
-    }
 }

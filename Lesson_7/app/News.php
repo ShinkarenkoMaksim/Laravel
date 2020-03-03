@@ -15,9 +15,32 @@ use Illuminate\Database\Eloquent\Model;
  */
 class News extends Model
 {
-    protected $fillable = ['title', 'text', 'is_private', 'category_id'];
+    protected $fillable = ['id', 'title', 'text', 'is_private', 'category_id'];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id')->first();
     }
+
+    public static function rules()
+    {
+        $tableCategory = (new Category())->getTable();
+        return [
+            'title' => 'required|min:5|max:30',
+            'text' => 'required|max:5000',
+            'category_id' => "required|exists:{$tableCategory},id",
+            'image' => 'mimes:jpeg,jpg|max:1000'
+        ];
+    }
+
+    public static function attributeNames()
+    {
+        return [
+            'title' => 'Заголовок новости',
+            'text' => 'Текст новости',
+            'category_id' => 'Категория новости',
+            'img' => 'Изображение'
+        ];
+    }
+
 }

@@ -21,13 +21,18 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h2 class="card-title">{{ $item->title }}</h2>
-                    <a class="btn btn-primary" href="{{ route('news.one', $item) }}">Подробнее...</a>
-                    <a class="btn btn-secondary" href="{{ route('admin.updateNews', $item) }}">Edit</a>
-                    <a class="btn btn-secondary" href="{{ route('admin.deleteNews', $item) }}">Delete</a>
-                    {{--<form action="{{ route('admin.destroy', $item->id) }}" method="POST">
-                        @method('DELETE')
-                        <button class="btn btn-danger" type="submit">Удалить</button>
-                    </form>--}}
+                    <div class="d-flex">
+                        <a class="btn btn-primary mr-1" href="{{ route('admin.show', $item) }}">Подробнее...</a>
+                        <form action="{{ route('admin.edit', $item) }}" method="GET" class="mr-1">
+                            @csrf
+                            <button class="btn btn-secondary" type="submit">Edit</button>
+                        </form>
+                        <form action="{{ route('admin.destroy', $item) }}" method="POST" class="mr-1">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit">Удалить</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -35,7 +40,7 @@
             <p>Нет новостей</p>
 
         @endforelse
-        {{ $news->links() }}
-    </div>
 
+    </div>
+    {{ $news->links() }}
 @endsection

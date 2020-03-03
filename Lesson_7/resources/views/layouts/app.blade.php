@@ -23,29 +23,37 @@
 </head>
 <body class="h-100">
 <div id="app" class="d-flex flex-column h-100">
-<header>
-    @yield('menu')
-</header>
+    <header>
+        @yield('menu')
+    </header>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        @if(session('success'))
-            <div class="alert alert-success alert-success fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @yield('content')
-    </div>
-</main>
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            @if(session('success'))
+                <div class="alert alert-success fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @yield('content')
+        </div>
+    </main>
 
-<footer class="footer mt-auto py-3">
-    <div class="container">
-        <span class="text-muted">&copy; Права защищены</span>
-    </div>
-</footer>
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <span class="text-muted">&copy; Права защищены</span>
+        </div>
+    </footer>
 </div>
 
 </body>

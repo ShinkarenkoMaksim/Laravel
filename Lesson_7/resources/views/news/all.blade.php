@@ -27,6 +27,7 @@
             <p>Нет новостей</p>
 
         @endforelse
-        {{ $news->links() }}
+
     </div>
+    {{ $news->links() }}
 @endsection

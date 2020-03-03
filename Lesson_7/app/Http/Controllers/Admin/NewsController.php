@@ -14,7 +14,13 @@ class NewsController extends Controller
         return view('admin.index', ['news' => $news]);
     }
 
-    public function update (News $news) {
+    public function show (News $news) {
+        return view('news.one', [
+            'news' => $news
+        ]);
+    }
+
+    public function edit (News $news) {
         return view('admin.addNews', [
             'news' => $news,
             'categories' => Category::query()->select('id', 'title')->get()
@@ -26,36 +32,56 @@ class NewsController extends Controller
         return stristr($path, '/');
     }
 
-    public function delete(News $news)
+    public function destroy(News $news)
     {
         $news->delete();
-        return redirect()->route('admin.index')->with('success', 'Новость удалена');
+        if ($news) {
+            return redirect()->route('admin.index')->with('success', 'Новость удалена');
+        } else {
+            return redirect()->route('admin.index')->with('error', 'Ошибка удаления');
+        }
+
     }
 
-    public function save(Request $request, News $news) {
+    public function store(Request $request, News $news) {
         if ($request->isMethod('post')) {
+            $this->validate($request, News::rules(), [], News::attributeNames());
             $news->fill($request->all());
             if ($request->file('img')) {
                 $news->img = $this->saveImg($request);
             }
-            $news->save();
-            return redirect()->route('admin.index')->with('success', 'Новость исправлена');
+            $result = $news->save();
+
+            if ($result) {
+                return redirect()->route('admin.index')->with('success', 'Новость добавлена');
+            } else {
+                $request->flash();
+                return redirect()->route('admin.create')->with('error', 'Ошибка изменения новости!');
+            }
         }
     }
 
-    public function add(Request $request, News $news)
-    {
-        if ($request->isMethod('POST')) {
-            $request->flash();
-
-            $news = new News();
-            $news-> fill($request->all());
-            if ($request->file('img'))
+    public function update(Request $request, News $news) {
+        if ($request->isMethod('PUT')) {
+            $this->validate($request, News::rules(), [], News::attributeNames());
+            $news->fill($request->all());
+            if ($request->file('img')) {
                 $news->img = $this->saveImg($request);
-            $news->save();
+            }
+            $result = $news->save();
 
-            return redirect()->route('admin.News')->with('success', 'Новость добавлена');
+            if ($result) {
+                return redirect()->route('admin.index')->with('success', 'Новость исправлена');
+            } else {
+                $request->flash();
+                return redirect()->route('admin.create')->with('error', 'Ошибка изменения новости!');
+            }
         }
+    }
+
+    public function create()
+    {
+        $news = new News();
         return view('admin.addNews', [
             'news' => $news,
             'categories' => Category::query()->select('id', 'title')->get()

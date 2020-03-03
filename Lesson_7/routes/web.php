@@ -21,10 +21,10 @@ Route::group([
     'as' => 'admin.'
 ], function () {
     //Route::get('/news', 'NewsController@all')->name('News');
-    Route::match(['post','get'],'/addNews', 'NewsController@add')->name('addNews');
-    Route::get('/updateNews{news}', 'NewsController@update')->name('updateNews');
-    Route::post('/saveNews{news}', 'NewsController@save')->name('saveNews');
-    Route::get('/deleteNews{news}', 'NewsController@delete')->name('deleteNews');
+    //Route::match(['post','get'],'/addNews', 'NewsController@add')->name('addNews');
+    //Route::get('/updateNews{news}', 'NewsController@update')->name('updateNews');
+    //Route::post('/saveNews{news}', 'NewsController@save')->name('saveNews');
+    //Route::get('/deleteNews{news}', 'NewsController@delete')->name('deleteNews');
 
 
 
@@ -33,7 +33,9 @@ Route::group([
     Route::get('/test2', 'IndexController@test2')->name('test2');
 });
 
-Route::resource('admin', 'Admin\NewsController');
+Route::resource('admin', 'Admin\NewsController')->parameters([
+    'admin' => 'news'
+]);;
 
 Route::group(
     [
