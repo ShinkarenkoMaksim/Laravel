@@ -56,7 +56,7 @@ class NewsController extends Controller
                 return redirect()->route('admin.index')->with('success', 'Новость добавлена');
             } else {
                 $request->flash();
-                return redirect()->route('admin.create')->with('error', 'Ошибка изменения новости!');
+                return redirect()->route('admin.create')->with('error', 'Ошибка добавления новости!');
             }
         }
     }
