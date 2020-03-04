@@ -16,14 +16,5 @@ class ExampleTest extends TestCase
      */
     public function testAddNews()
     {
-
-        $response = $this->json('POST','/admin/addNews', [
-                "category" => 2,
-                "title" => "НовтостьТест",
-                "text" => "lorem ipsum"
-        ]);
-
-        $response->assertRedirect('/admin/addNews');
-        Storage::disk('local')->assertExists('news.txt');
     }
 }
