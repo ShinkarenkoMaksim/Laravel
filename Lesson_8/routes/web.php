@@ -11,22 +11,28 @@
 |
 */
 
+Auth::routes();
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::get('/', 'HomeController@index')->name('home');
-
-
 
 Route::group([
     'prefix' => 'admin',
     'namespace' => 'Admin',
-    'as' => 'admin.'
+    'as' => 'admin.',
+    'middleware' => ['auth', 'is_admin']
 ], function () {
+    Route::get('/index', 'IndexController@index')->name('index');
+    Route::match(['post', 'get'], '/profile', 'ProfileController@update')->name('updateProfile');
     Route::get('/test1', 'IndexController@test1')->name('test1');
     Route::get('/test2', 'IndexController@test2')->name('test2');
 });
 
-Route::resource('admin', 'Admin\NewsController')->parameters([
-    'admin' => 'news'
-]);;
+Route::resource('admin.news', 'Admin\NewsController')
+    ->parameters(['admin' => 'news'])
+    ->middleware(['auth', 'is_admin']);
 
 Route::group(
     [
@@ -44,6 +50,6 @@ Route::group(
    'uses' => 'HomeController@index'
 ]);*/
 
-Auth::routes();
+
 
 

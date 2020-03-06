@@ -3,11 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\News;
-//use Faker\Generator as Faker;
+use Faker\Generator as Faker;
 
-$factory->define(News::class, function () {
-    $faker = Faker\Factory::create('ru_RU');
-
+$factory->define(News::class, function (Faker $faker) {
     return [
         'title' => $faker->realText(rand(10, 20)),
         'text' => $faker->realText(rand(1000, 2000)),

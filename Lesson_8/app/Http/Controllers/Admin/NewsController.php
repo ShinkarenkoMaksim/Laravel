@@ -6,12 +6,13 @@ use App\Category;
 use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
     public function index() {
         $news = News::query()->paginate(6);
-        return view('admin.index', ['news' => $news]);
+        return view('admin.news', ['news' => $news]);
     }
 
     public function show (News $news) {
@@ -36,9 +37,9 @@ class NewsController extends Controller
     {
         $news->delete();
         if ($news) {
-            return redirect()->route('admin.index')->with('success', 'Новость удалена');
+            return redirect()->route('admin.news.index')->with('success', 'Новость удалена');
         } else {
-            return redirect()->route('admin.index')->with('error', 'Ошибка удаления');
+            return redirect()->route('admin.news.index')->with('error', 'Ошибка удаления');
         }
 
     }
@@ -53,10 +54,10 @@ class NewsController extends Controller
             $result = $news->save();
 
             if ($result) {
-                return redirect()->route('admin.index')->with('success', 'Новость добавлена');
+                return redirect()->route('admin.news.index')->with('success', 'Новость добавлена');
             } else {
                 $request->flash();
-                return redirect()->route('admin.create')->with('error', 'Ошибка добавления новости!');
+                return redirect()->route('admin.news.create')->with('error', 'Ошибка добавления новости!');
             }
         }
     }
@@ -71,10 +72,10 @@ class NewsController extends Controller
             $result = $news->save();
 
             if ($result) {
-                return redirect()->route('admin.index')->with('success', 'Новость исправлена');
+                return redirect()->route('admin.news.index')->with('success', 'Новость исправлена');
             } else {
                 $request->flash();
-                return redirect()->route('admin.create')->with('error', 'Ошибка изменения новости!');
+                return redirect()->route('admin.news.create')->with('error', 'Ошибка изменения новости!');
             }
         }
     }

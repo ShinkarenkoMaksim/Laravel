@@ -8,23 +8,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
 
-
+    public function index() {
+        return view('admin.index', [
+            'login' => Auth::user()->name,
+        ]);
+    }
 
     public function test1 () {
-        $content = view('admin.test1')->render();
-        return response($content)
-            ->header('Content-type', 'application/txt')
-            ->header('Content-Length', mb_strlen($content))
-            ->header('Content-Disposition', 'attachment; filename = "dl.txt"');
     }
 
     public function test2 (News $news) {
-        return response()->json($news->getNews())
-            ->header('Content-Disposition', 'attachment; filename = "json.txt"')
-            ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }

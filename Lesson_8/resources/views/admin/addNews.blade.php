@@ -10,10 +10,10 @@
 
 @section('content')
     <form class="mt-4"
-          action="@if(!$news->id){{ route('admin.store') }} @else {{ route('admin.update', $news) }} @endif"
+          action="@if(!$news->id){{ route('admin.news.store') }} @else {{ route('admin.news.update', $news) }} @endif"
           method="POST" enctype="multipart/form-data">
         @csrf
-        @if(request()->routeIs('admin.edit'))
+        @if(request()->routeIs('admin.news.edit'))
             @method('PUT')
             <input type="hidden" name="id" value="{{ $news->id }}">
         @endif
@@ -27,7 +27,7 @@
                 </div>
             @endif
             <input name="title" type="text" class="form-control" id="newsTitle" placeholder="Название новости"
-                   value="{{ $news->title ?? old('title') }}">
+                   value="{{ old('title') ?? $news->title ?? '' }}">
         </div>
         <div class="form-group">
             <label for="newsCategory">Категория новости</label>
@@ -57,7 +57,7 @@
                 </div>
             @endif
             <textarea name="text" class="form-control" id="newsText"
-                      rows="15">{{ $news->text ?? old('text') }}</textarea>
+                      rows="15">{{ old('text') ?? $news->text ?? '' }}</textarea>
         </div>
         <div class="form-check">
             <input @if (old('is_private')) checked @endif name="is_private" class="form-check-input" type="checkbox"
