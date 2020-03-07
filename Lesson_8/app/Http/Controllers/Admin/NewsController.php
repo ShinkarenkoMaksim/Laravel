@@ -24,7 +24,7 @@ class NewsController extends Controller
     public function edit (News $news) {
         return view('admin.addNews', [
             'news' => $news,
-            'categories' => Category::query()->select('id', 'title')->get()
+            'categories' => Category::all(),
         ]);
     }
 
@@ -85,7 +85,7 @@ class NewsController extends Controller
         $news = new News();
         return view('admin.addNews', [
             'news' => $news,
-            'categories' => Category::query()->select('id', 'title')->get()
+            'categories' => Category::all(),
         ]);
     }
 }

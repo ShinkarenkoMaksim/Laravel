@@ -11,6 +11,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <h1>Список новостей</h1>
+                <a class="btn btn-success mb-3" href="{{ route('admin.news.create') }}">Добавить новость</a>
             </div>
         </div>
     </div>
