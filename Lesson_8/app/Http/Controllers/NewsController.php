@@ -28,7 +28,6 @@ class NewsController extends Controller
 
     public function newsOne(News $news)
     {
-        //$news = News::find($id);
         return view('news.one', ['news' => $news]);
 
     }
@@ -38,7 +37,6 @@ class NewsController extends Controller
         $categories = Category::query()->select(['id', 'title'])->where('url', $url)->get();
         if (!empty($categories[0])) {
             $category = $categories[0]->title;
-            //$news = News::query()->where('category_id', $categories[0]->id)->paginate(6);
             $news = Category::query()->find($categories[0]->id)->news()->paginate(6);
             return view('news.oneCategory', ['news' => $news, 'category' => $category]);
         } else

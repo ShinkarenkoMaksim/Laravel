@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class NewsController extends Controller
 {
     public function index() {
-        $news = News::query()->paginate(6);
+        $news = News::query()->paginate(12);
         return view('admin.news', ['news' => $news]);
     }
 

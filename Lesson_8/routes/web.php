@@ -25,10 +25,14 @@ Route::group([
     'middleware' => ['auth', 'is_admin']
 ], function () {
     Route::get('/index', 'IndexController@index')->name('index');
-    Route::match(['post', 'get'], '/profile', 'ProfileController@update')->name('updateProfile');
     Route::get('/test1', 'IndexController@test1')->name('test1');
     Route::get('/test2', 'IndexController@test2')->name('test2');
 });
+
+Route::resource('admin.users', 'Admin\ProfileController')
+    ->parameters(['admin' => 'user'])
+    ->middleware(['auth', 'is_admin'])
+    ->except(['show', 'create', 'store']);
 
 Route::resource('admin.news', 'Admin\NewsController')
     ->parameters(['admin' => 'news'])
