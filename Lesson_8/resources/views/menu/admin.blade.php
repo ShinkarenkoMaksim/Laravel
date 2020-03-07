@@ -7,11 +7,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link {{ request()->routeIs('admin.news.index')?'active':'' }}" href="{{ route('admin.news.index') }}">Все новости</a>
-                <a class="nav-item nav-link {{ request()->routeIs('admin.news.create')?'active':'' }}" href="{{ route('admin.news.create') }}">Добавить новость</a>
-                <a class="nav-item nav-link {{ request()->routeIs('admin.updateProfile')?'active':'' }}" href="{{ route('admin.updateProfile') }}">Изменить профиль</a>
-                <a class="nav-item nav-link {{ request()->routeIs('admin.test1')?'active':'' }}" href="{{ route('admin.test1') }}">text</a>
-                <a class="nav-item nav-link {{ request()->routeIs('admin.test2')?'active':'' }}" href="{{ route('admin.test2') }}">json</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.news.index')?'active':'' }}"
+                   href="{{ route('admin.news.index') }}">Новости</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.users.index')?'active':'' }}"
+                   href="{{ route('admin.users.index') }}">Профили</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.test1')?'active':'' }}"
+                   href="{{ route('admin.test1') }}">text</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.test2')?'active':'' }}"
+                   href="{{ route('admin.test2') }}">json</a>
 
             </div>
         </div>
@@ -28,7 +31,8 @@
                 @endif
             @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
