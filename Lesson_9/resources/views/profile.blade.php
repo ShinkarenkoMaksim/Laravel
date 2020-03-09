@@ -13,8 +13,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.users.update', $user) }}">
                         @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="id" value="{{ $user->id }}">
+                        @method('PUT')
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -46,24 +45,23 @@
                                 @enderror
                             </div>
                         </div>
-                        @if(Auth::user() == $user)
-                            <div class="form-group row">
-                                <label for="password"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                           class="form-control @error('password') is-invalid @enderror" name="password"
-                                           autocomplete="password">
+                        <div class="form-group row">
+                            <label for="password"
+                                   class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
 
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                            <div class="col-md-6">
+                                <input id="password" type="password"
+                                       class="form-control @error('password') is-invalid @enderror" name="password"
+                                       autocomplete="password">
+
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                    @enderror
-                                </div>
+                                @enderror
                             </div>
-                        @endif
+                        </div>
 
                         <div class="form-group row">
                             <label for="new-password"
@@ -91,15 +89,6 @@
                                        name="new_password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
-
-                            <div class="form-check" @if (Auth::user() == $user) hidden @endif>
-                                <input @if ($user->is_admin) checked @endif name="is_admin" class="form-check-input"
-                                       type="checkbox"
-                                       value="1" id="is_admin">
-                                <label class="form-check-label" for="is_admin">
-                                    Администратор
-                                </label>
-                            </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

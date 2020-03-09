@@ -12,6 +12,7 @@
 */
 
 Auth::routes();
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -24,19 +25,19 @@ Route::group([
     'as' => 'admin.',
     'middleware' => ['auth', 'is_admin']
 ], function () {
+    Route::resource('users', 'UserController')
+        ->parameters(['admin' => 'user'])
+        ->except(['show', 'create', 'store']);
+
+    Route::resource('news', 'NewsController')
+        ->parameters(['admin' => 'news']);
+
     Route::get('/index', 'IndexController@index')->name('index');
     Route::get('/test1', 'IndexController@test1')->name('test1');
     Route::get('/test2', 'IndexController@test2')->name('test2');
 });
 
-Route::resource('admin.users', 'Admin\ProfileController')
-    ->parameters(['admin' => 'user'])
-    ->middleware(['auth', 'is_admin'])
-    ->except(['show', 'create', 'store']);
 
-Route::resource('admin.news', 'Admin\NewsController')
-    ->parameters(['admin' => 'news'])
-    ->middleware(['auth', 'is_admin']);
 
 Route::group(
     [

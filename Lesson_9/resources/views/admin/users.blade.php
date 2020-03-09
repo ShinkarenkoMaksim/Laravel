@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 card mt-3">
-                <h2>Изменение учетных данных пользователя</h2>
+                <h2>Список пользователей</h2>
                 @foreach($users as $item)
 
                     <div class="card" style="width: 18rem;">
@@ -25,11 +25,13 @@
                                     @csrf
                                     <button class="btn btn-secondary" type="submit">Edit</button>
                                 </form>
-                                <form action="{{ route('admin.users.destroy', $item) }}" method="POST" class="mr-1">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger" type="submit">Удалить</button>
-                                </form>
+                                @if(Auth::user() != $item)
+                                    <form action="{{ route('admin.users.destroy', $item) }}" method="POST" class="mr-1">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit">Удалить</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>
