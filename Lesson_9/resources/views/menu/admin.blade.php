@@ -11,6 +11,8 @@
                    href="{{ route('admin.news.index') }}">Новости</a>
                 <a class="nav-item nav-link {{ request()->routeIs('admin.users.index')?'active':'' }}"
                    href="{{ route('admin.users.index') }}">Профили</a>
+                <a class="nav-item nav-link {{ request()->routeIs('admin.parser')?'active':'' }}"
+                   href="{{ route('admin.parser') }}">Парсер</a>
                 <a class="nav-item nav-link {{ request()->routeIs('admin.test1')?'active':'' }}"
                    href="{{ route('admin.test1') }}">text</a>
                 <a class="nav-item nav-link {{ request()->routeIs('admin.test2')?'active':'' }}"

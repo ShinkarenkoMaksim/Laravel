@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    @if(!$news->is_private)
+    @if(!$news->is_private || Auth::id())
 
         <div class="card mt-4 ml-auto mr-auto" style="width: 50rem;">
             <img src="{{ $news->img ? asset('storage/' . $news->img) : asset('img/default.jpg') }}" class="card-img-top w-25 ml-auto mr-auto mt-2" alt="{{ $news->title }}">

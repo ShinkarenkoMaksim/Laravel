@@ -16,7 +16,7 @@
                     <h2 class="card-title">{{ $item->title }}</h2>
                     <div class="card-img mb-3"
                          style="background-image: url({{ $item->img ? asset('storage/' . $item->img) : asset('img/default.jpg') }})"></div>
-                    @if(!$item->is_private)
+                    @if(!$item->is_private || Auth::id())
                         <a class="btn btn-primary" href="{{ route('news.one', $item) }}">Подробнее...</a>
                     @endif
 

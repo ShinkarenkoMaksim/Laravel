@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body class="h-100">
+
+
 <div id="app" class="d-flex flex-column h-100">
     <header>
         @yield('menu')

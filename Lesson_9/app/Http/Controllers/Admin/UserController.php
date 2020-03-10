@@ -61,7 +61,7 @@ class UserController extends Controller
             'name' => 'required|string|max:10',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => Auth::user() == $user ? 'required' : '',
-            'new_password' => 'required|string|min:3|confirmed'
+            'new_password' => 'nullable|string|min:3|confirmed'
         ];
     }
 

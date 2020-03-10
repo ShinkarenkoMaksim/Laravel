@@ -17,6 +17,15 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('/auth/vk', 'LoginController@loginVK')->name('vkLogin');
+Route::get('/auth/vk/response', 'LoginController@responseVK')->name('vkResponse');
+
+/*Route::get('/auth/google', 'LoginController@loginGoogle')->name('googleLogin');
+Route::get('/auth/google/response', 'LoginController@responseGoogle')->name('googleResponse');*/
+
+Route::get('/auth/fb', 'LoginController@loginFB')->name('fbLogin');
+Route::get('/auth/fb/response', 'LoginController@responseFB')->name('fbResponse');
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group([
@@ -31,6 +40,8 @@ Route::group([
 
     Route::resource('news', 'NewsController')
         ->parameters(['admin' => 'news']);
+
+    Route::get('/parser', 'ParserController@index')->name('parser');
 
     Route::get('/index', 'IndexController@index')->name('index');
     Route::get('/test1', 'IndexController@test1')->name('test1');
