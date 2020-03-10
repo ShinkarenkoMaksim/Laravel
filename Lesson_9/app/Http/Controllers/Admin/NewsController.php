@@ -7,28 +7,33 @@ use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use function Sodium\add;
 
 class NewsController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $news = News::query()->paginate(12);
         return view('admin.news', ['news' => $news]);
     }
 
-    public function show (News $news) {
+    public function show(News $news)
+    {
         return view('news.one', [
             'news' => $news
         ]);
     }
 
-    public function edit (News $news) {
+    public function edit(News $news)
+    {
         return view('admin.addNews', [
             'news' => $news,
             'categories' => Category::all(),
         ]);
     }
 
-    private function saveImg(Request $request) {
+    private function saveImg(Request $request)
+    {
         $path = $request->file('img')->store('public/img');
         return stristr($path, '/');
     }
@@ -44,10 +49,16 @@ class NewsController extends Controller
 
     }
 
-    public function store(Request $request, News $news) {
+    public function store(Request $request, News $news)
+    {
         if ($request->isMethod('post')) {
-            $this->validate($request, News::rules(), [], News::attributeNames());
+            $this->validate($request, News::rules($request->get('category_id')), [], News::attributeNames());
             $news->fill($request->all());
+
+            if ($news->category_id == 'new_cat')
+                $news->category_id = $this->addCategory($news->category);
+
+            $news->offsetUnset('category');
             if ($request->file('img')) {
                 $news->img = $this->saveImg($request);
             }
@@ -62,7 +73,17 @@ class NewsController extends Controller
         }
     }
 
-    public function update(Request $request, News $news) {
+    private function addCategory($category)
+    {
+        $newCat = new Category();
+        $newCat->title = $category;
+        $newCat->url = \Str::slug($category);
+        $newCat->save();
+        return $newCat->id;
+    }
+
+    public function update(Request $request, News $news)
+    {
         if ($request->isMethod('PUT')) {
             $this->validate($request, News::rules(), [], News::attributeNames());
             $news->fill($request->all());

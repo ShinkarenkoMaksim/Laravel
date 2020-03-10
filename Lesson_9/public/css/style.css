@@ -8,3 +8,7 @@
 .avatar {
     height: 50px;
 }
+
+#category {
+    display: none;
+}

@@ -13,9 +13,9 @@
 
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h2 class="card-title">{{ $item->title }}</h2>
+                    <h2 class="card-title" style="height: 10rem;">{{ $item->title }}</h2>
                     <div class="card-img mb-3"
-                         style="background-image: url({{ $item->img ? asset('storage/' . $item->img) : asset('img/default.jpg') }})"></div>
+                         style="background-image: url({{ !strncasecmp($item->img, 'http', 4) ? $item->img : ($item->img ? asset('storage/' . $item->img) : asset('img/default.jpg')) }})"></div>
                     @if(!$item->is_private || Auth::id())
                         <a class="btn btn-primary" href="{{ route('news.one', $item) }}">Подробнее...</a>
                     @endif

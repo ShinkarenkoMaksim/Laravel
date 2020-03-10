@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <form class="mt-4"
+    <form class="mt-4" id="form"
           action="@if(!$news->id){{ route('admin.news.store') }} @else {{ route('admin.news.update', $news) }} @endif"
           method="POST" enctype="multipart/form-data">
         @csrf
@@ -42,10 +42,13 @@
                 @forelse($categories as $item)
                     <option @if ($item->id == old('category_id')) selected
                             @endif value="{{ $item->id }}">{{ $item->title }}</option>
+
                 @empty
                     <h2>Нет категорий</h2>
                 @endforelse
+                    <option value="new_cat">Добавить категорию</option>
             </select>
+            <input name="category" class="form-control" type="text" id="category" placeholder="Имя категории" value="{{ old('category') ? old('category') : '' }}"/>
         </div>
         <div class="form-group">
             <label for="newsText">Текст новости</label>

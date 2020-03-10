@@ -15,21 +15,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class News extends Model
 {
-    protected $fillable = ['id', 'title', 'text', 'is_private', 'category_id'];
+    protected $fillable = ['id', 'title', 'text', 'is_private', 'category_id', 'category', 'img'];
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id')->first();
     }
 
-    public static function rules()
+    public static function rules($category = null)
     {
         $tableCategory = (new Category())->getTable();
         return [
             'title' => 'required|min:5|max:30',
             'text' => 'required|max:5000',
-            'category_id' => "required|exists:{$tableCategory},id",
-            'image' => 'mimes:jpeg,jpg|max:1000'
+            'category_id' => ($category == 'new_cat') ? "required|unique:categories,title" : "required|exists:{$tableCategory},id",
+            'category' => ($category == 'new_cat') ? "required|unique:categories,title" : "nullable",
+            'img' => 'mimes:jpeg,jpg|max:1000'
         ];
     }
 
