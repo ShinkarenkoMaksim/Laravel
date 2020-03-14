@@ -10,15 +10,6 @@ use Orchestra\Parser\Xml\Facade as XmlParser;
 
 class ParserController extends Controller
 {
-    private function addCategory($category)
-    {
-        $newCat = new Category();
-        $newCat->title = $category;
-        $newCat->url = \Str::slug($category);
-        $newCat->save();
-        return $newCat->id;
-    }
-
     public function index()
     {
 
@@ -31,26 +22,24 @@ class ParserController extends Controller
             'news' => ['uses' => 'channel.item[title,link,guid,description,pubDate]'],
         ]);
 
-
-
         $img = $data['image'];
-        $category = Category::query()->where('title', '=', $data['title'])->get()->toArray();
-        if (!empty($category))
-            $categoryId = $category[0]['id'];
-        else
-            $categoryId = $this->addCategory($data['title']);
+
+        $category = Category::firstOrCreate(['title' => $data['title']],
+            [
+                'url' => \Str::slug($data['title']),
+            ])->id;
 
         foreach ($data['news'] as $item) {
             $news = new News();
 
-            $news->fill([
-                'title' => $item['title'],
-                'category_id' => $categoryId,
-                'text' => $item['description'],
-                'img' => $img
-            ]);
-
-            $news->save();
+            $news->firstOrCreate(['title' => $item['title']],
+                [
+                    'category_id' => $category,
+                    'text' => $item['description'],
+                    'img' => $img
+                ]);
+            // Либо сохраняем циклом, но через Eloquent, либо вне цикла через DB:: и городим проверку сущестующей новости...
+            // Остановлюсь пока на этом, скорость будем считать неважной в данном случае.
         }
 
         return redirect()->route('admin.news.index')->with('success', 'Новости добавлены в БД успешно');

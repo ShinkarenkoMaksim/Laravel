@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function loginVK() {
-        if (Auth::id()) {
+        if (Auth::check()) {
             return redirect()->route('home');
         }
         return Socialite::with('vkontakte')->redirect();
     }
 
     public function responseVK(UserRepository $userRepository) {
-        if (Auth::id()) {
+        if (Auth::check()) {
             return redirect()->route('home');
         }
         $user = Socialite::driver('vkontakte')->user();
@@ -27,14 +27,14 @@ class LoginController extends Controller
     }
 
     public function loginFB() {
-        if (Auth::id()) {
+        if (Auth::check()) {
             return redirect()->route('home');
         }
         return Socialite::with('facebook')->redirect();
     }
 
     public function responseFB(UserRepository $userRepository) {
-        if (Auth::id()) {
+        if (Auth::check()) {
             return redirect()->route('home');
         }
         $user = Socialite::driver('facebook')->user();
