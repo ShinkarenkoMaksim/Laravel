@@ -87,6 +87,11 @@ class NewsController extends Controller
         if ($request->isMethod('PUT')) {
             $this->validate($request, News::rules(), [], News::attributeNames());
             $news->fill($request->all());
+
+            if ($news->category_id == 'new_cat')
+                $news->category_id = $this->addCategory($news->category);
+            $news->offsetUnset('category');
+
             if ($request->file('img')) {
                 $news->img = $this->saveImg($request);
             }

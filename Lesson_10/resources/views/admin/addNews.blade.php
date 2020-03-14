@@ -40,7 +40,7 @@
             @endif
             <select name="category_id" class="form-control" id="newsCategory">
                 @forelse($categories as $item)
-                    <option @if ($item->id == old('category_id')) selected
+                    <option @if ($item->id) selected
                             @endif value="{{ $item->id }}">{{ $item->title }}</option>
 
                 @empty
@@ -51,7 +51,7 @@
             <input name="category" class="form-control" type="text" id="category" placeholder="Имя категории" value="{{ old('category') ? old('category') : '' }}"/>
         </div>
         <div class="form-group">
-            <label for="newsText">Текст новости</label>
+            <label for="textEdit">Текст новости</label>
             @if($errors->has('text'))
                 <div class="alert alert-danger" role="danger">
                     @foreach($errors->get('text') as $error)
@@ -60,7 +60,7 @@
                 </div>
             @endif
             <textarea name="text" class="form-control" id="newsText"
-                      rows="15">{{ old('text') ?? $news->text ?? '' }}</textarea>
+                      rows="15">{!! old('text') ?? $news->text ?? '' !!}</textarea>
         </div>
         <div class="form-check">
             <input @if (old('is_private')) checked @endif name="is_private" class="form-check-input" type="checkbox"
@@ -84,4 +84,16 @@
             @if($news->id) Изменить @else Добавить @endif
         </button>
     </form>
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+    </script>
+    <script>
+        CKEDITOR.replace('newsText', options);
+    </script>
 @endsection

@@ -26,7 +26,7 @@ class News extends Model
     {
         $tableCategory = (new Category())->getTable();
         return [
-            'title' => 'required|min:5|max:30',
+            'title' => 'required|min:5|max:100',
             'text' => 'required|max:5000',
             'category_id' => ($category == 'new_cat') ? "required|unique:categories,title" : "required|exists:{$tableCategory},id",
             'category' => ($category == 'new_cat') ? "required|unique:categories,title" : "nullable",

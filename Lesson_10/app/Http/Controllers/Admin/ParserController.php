@@ -2,47 +2,42 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
+
+use App\Jobs\NewsParsing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\News;
 use Orchestra\Parser\Xml\Facade as XmlParser;
+use App\Services\XMLParserService;
 
 class ParserController extends Controller
 {
     public function index()
     {
-
-        $xml = XmlParser::load('https://news.yandex.ru/auto.rss');
-        $data = $xml->parse([
-            'title' => ['uses' => 'channel.title'],
-            'link' => ['uses' => 'channel.link'],
-            'description' => ['uses' => 'channel.description'],
-            'image' => ['uses' => 'channel.image.url'],
-            'news' => ['uses' => 'channel.item[title,link,guid,description,pubDate]'],
-        ]);
-
-        $img = $data['image'];
-
-        $category = Category::firstOrCreate(['title' => $data['title']],
-            [
-                'url' => \Str::slug($data['title']),
-            ])->id;
-
-        foreach ($data['news'] as $item) {
-            $news = new News();
-
-            $news->firstOrCreate(['title' => $item['title']],
-                [
-                    'category_id' => $category,
-                    'text' => $item['description'],
-                    'img' => $img
-                ]);
-            // Либо сохраняем циклом, но через Eloquent, либо вне цикла через DB:: и городим проверку сущестующей новости...
-            // Остановлюсь пока на этом, скорость будем считать неважной в данном случае.
+        $start = date('c');
+        $rssLink = [
+            'https://news.yandex.ru/auto.rss',
+            'https://news.yandex.ru/auto_racing.rss',
+            'https://news.yandex.ru/army.rss',
+            'https://news.yandex.ru/gadgets.rss',
+            'https://news.yandex.ru/index.rss',
+            'https://news.yandex.ru/martial_arts.rss',
+            'https://news.yandex.ru/communal.rss',
+            'https://news.yandex.ru/health.rss',
+            'https://news.yandex.ru/games.rss',
+            'https://news.yandex.ru/internet.rss',
+            'https://news.yandex.ru/cyber_sport.rss',
+            'https://news.yandex.ru/movies.rss',
+            'https://news.yandex.ru/cosmos.rss',
+            'https://news.yandex.ru/culture.rss',
+            'https://news.yandex.ru/championsleague.rss',
+            'https://news.yandex.ru/music.rss',
+            'https://news.yandex.ru/nhl.rss',
+        ];
+        foreach ($rssLink as $link) {
+            NewsParsing::dispatch($link);
         }
 
-        return redirect()->route('admin.news.index')->with('success', 'Новости добавлены в БД успешно');
+        return redirect()->route('admin.news.index')->with('success', 'Новости добавляются в БД...');
 
     }
 }

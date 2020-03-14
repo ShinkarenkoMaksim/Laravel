@@ -25,6 +25,7 @@
                                     @csrf
                                     <button class="btn btn-secondary" type="submit">Edit</button>
                                 </form>
+                                {{--<button class="btn btn-secondary testApi" data-id="{{ $item->id }}">Test</button>--}}
                                 @if(Auth::user() != $item)
                                     <form action="{{ route('admin.users.destroy', $item) }}" method="POST" class="mr-1">
                                         @csrf
@@ -40,4 +41,19 @@
             </div>
         </div>
     </div>
+
+{{--    <script !src="">
+        let buttons = document.querySelectorAll('.testApi');
+        buttons.forEach((elem) => {
+            elem.addEventListener('click', () => {
+                console.log('sending...');
+                let id = elem.getAttribute('data-id');
+                (async () => {
+                    const response = await fetch('/api/apiTest/?id=' + id);
+                    const answer = await response.json();
+                    console.log(answer);
+                })();
+            })
+        })
+    </script>--}}
 @endsection
