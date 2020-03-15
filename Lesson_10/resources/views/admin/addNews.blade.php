@@ -84,7 +84,7 @@
             @if($news->id) Изменить @else Добавить @endif
         </button>
     </form>
-    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script src="{{ asset('/vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         var options = {
             filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',

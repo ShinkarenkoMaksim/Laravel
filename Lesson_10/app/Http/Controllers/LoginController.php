@@ -38,7 +38,7 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
         $user = Socialite::driver('facebook')->user();
-        $userInSystem = $userRepository->getUserBySocIdFB($user, 'fb');
+        $userInSystem = $userRepository->getUserBySocId($user, 'fb');
         Auth::Login($userInSystem);
         return redirect()->route('home');
     }

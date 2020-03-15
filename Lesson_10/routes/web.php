@@ -26,6 +26,8 @@ Route::get('/auth/google/response', 'LoginController@responseGoogle')->name('goo
 Route::get('/auth/fb', 'LoginController@loginFB')->name('fbLogin');
 Route::get('/auth/fb/response', 'LoginController@responseFB')->name('fbResponse');
 
+Route::match(['get', 'post'],'/myProfile/{user?}', 'ProfileController@modify')->name('myProfile');
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group([
@@ -41,11 +43,13 @@ Route::group([
     Route::resource('news', 'NewsController')
         ->parameters(['admin' => 'news']);
 
+    Route::resource('resources', 'ResourceController')
+        ->parameters(['admin' => 'resource'])
+        ->except(['show']);
+
     Route::get('/parser', 'ParserController@index')->name('parser');
 
     Route::get('/index', 'IndexController@index')->name('index');
-    Route::get('/test1', 'IndexController@test1')->name('test1');
-    Route::get('/test2', 'IndexController@test2')->name('test2');
 });
 
 

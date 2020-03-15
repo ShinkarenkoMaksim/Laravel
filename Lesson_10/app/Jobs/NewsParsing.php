@@ -13,6 +13,8 @@ class NewsParsing implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $tries = 5;
+
     private $link;
 
     /**

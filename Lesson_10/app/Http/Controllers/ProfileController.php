@@ -1,78 +1,49 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use const http\Client\Curl\AUTH_ANY;
 
 class ProfileController extends Controller
 {
 
-    public function index()
+    public function modify(Request $request, User $user)
     {
-        $users = User::query()->paginate(12);
-        return view('admin.users', ['users' => $users]);
-    }
-
-    public function edit(User $user)
-    {
-        return view('admin.modifyUser', [
-            'user' => $user,
-        ]);
+        if ($request->isMethod('get'))
+            return view('profile', ['user' => Auth::user(),]);
+        elseif ($request->isMethod('post'))
+            return $this->update($user, $request);
     }
 
 
-    public function update(User $user, Request $request)
+    private function update(User $user, Request $request)
     {
         $errors = [];
 
-        if ($request->isMethod('PUT')) {
-            $this->validate($request, $this->validateRules(), [], User::attributeNames());
-            if (Hash::check($request->post('password'), $user->password)) {
-                $user->fill([
-                    'name' => $request->post('name'),
-                    'password' => Hash::make($request->post('new_password')),
-                    'email' => $request->post('email')
-                ]);
-                $user->save();
-                return redirect()->route('admin.users.index')->with('success', 'Данные успешно изменены');
-            } else {
-                $errors['password'][] = 'Неверно введен текущий пароль';
-            }
-            return redirect()->route('admin.users.index')->withErrors($errors);
-        } else if ($request->isMethod('PATCH')) {
-            $this->validate($request, $this->validateRulesAlt($user), [], User::attributeNames());
+        if ((Hash::check($request->post('password'), Auth::user()->password)) && Auth::id() == $user->id) {
 
-            if ($request->post('is_admin')) {
-                $user->fill([
-                    'is_admin' => true
-                ]);
-            } else {
-                $user->fill([
-                    'is_admin' => false
-                ]);
-            }
+            $this->validate($request, $this->validateRules($user), [], User::attributeNames());
+
             $user->fill([
                 'name' => $request->post('name'),
-                'email' => $request->post('email')
+                'email' => $request->post('email'),
+                'password' => Hash::make($request->post('new_password')),
             ]);
 
             $user->save();
-            return redirect()->route('admin.users.index')->with('success', 'Данные успешно изменены');
-        }
-    }
 
-    public function destroy(User $user)
-    {
-        $user->delete();
-        if ($user) {
-            return redirect()->route('admin.users.index')->with('success', 'Пользователь удален');
+            return redirect()->route('myProfile')->with('success', 'Данные успешно изменены');
         } else {
-            return redirect()->route('admin.users.index')->with('error', 'Ошибка удаления');
+            $errors['password'][] = 'Неверно введен текущий пароль';
         }
+
+        $request->flash();
+        return redirect()->route('myProfile')->withErrors($errors);
 
     }
 
@@ -85,14 +56,4 @@ class ProfileController extends Controller
             'new_password' => 'required|string|min:3|confirmed'
         ];
     }
-
-    public function validateRulesAlt($user)
-    {
-        return [
-            'name' => 'required|string|max:10',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-        ];
-    }
-
-
 }

@@ -18,10 +18,4 @@ class IndexController extends Controller
             'login' => Auth::user()->name,
         ]);
     }
-
-    public function test1 () {
-    }
-
-    public function test2 (News $news) {
-    }
 }

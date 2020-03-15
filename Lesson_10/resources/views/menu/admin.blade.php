@@ -13,11 +13,8 @@
                    href="{{ route('admin.users.index') }}">Профили</a>
                 <a class="nav-item nav-link {{ request()->routeIs('admin.parser')?'active':'' }}"
                    href="{{ route('admin.parser') }}">Парсер</a>
-                <a class="nav-item nav-link {{ request()->routeIs('admin.test1')?'active':'' }}"
-                   href="{{ route('admin.test1') }}">text</a>
-                <a class="nav-item nav-link {{ request()->routeIs('admin.test2')?'active':'' }}"
-                   href="{{ route('admin.test2') }}">json</a>
-
+                <a class="nav-item nav-link {{ request()->routeIs('admin.resources.index')?'active':'' }}"
+                   href="{{ route('admin.resources.index') }}">Ресурсы новостей</a>
             </div>
         </div>
         <ul class="navbar-nav ml-auto">

@@ -23,16 +23,16 @@ class News extends Model
     }
 
     public static function rules($category = null)
-    {
-        $tableCategory = (new Category())->getTable();
-        return [
-            'title' => 'required|min:5|max:100',
-            'text' => 'required|max:5000',
-            'category_id' => ($category == 'new_cat') ? "required|unique:categories,title" : "required|exists:{$tableCategory},id",
-            'category' => ($category == 'new_cat') ? "required|unique:categories,title" : "nullable",
-            'img' => 'mimes:jpeg,jpg|max:1000'
-        ];
-    }
+{
+    $tableCategory = (new Category())->getTable();
+    return [
+        'title' => 'required|min:5|max:100',
+        'text' => 'required|max:5000',
+        'category_id' => ($category == 'new_cat') ? "required|unique:categories,title" : "required|exists:{$tableCategory},id",
+        'category' => ($category == 'new_cat') ? "required|unique:categories,title" : "nullable",
+        'img' => 'mimes:jpeg,jpg|max:1000'
+    ];
+}
 
     public static function attributeNames()
     {
