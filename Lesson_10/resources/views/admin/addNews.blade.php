@@ -42,13 +42,15 @@
                 @forelse($categories as $item)
                     <option @if ($item->id) selected
                             @endif value="{{ $item->id }}">{{ $item->title }}</option>
-
                 @empty
-                    <h2>Нет категорий</h2>
                 @endforelse
-                    <option value="new_cat">Добавить категорию</option>
+                <option value="new_cat">Добавить категорию</option>
+
             </select>
-            <input name="category" class="form-control" type="text" id="category" placeholder="Имя категории" value="{{ old('category') ? old('category') : '' }}"/>
+
+            <input name="category" @if($categories->isEmpty()) style="display: block" @endif class="form-control"
+                   type="text" id="category" placeholder="Имя категории"
+                   value="{{ old('category') ? old('category') : '' }}"/>
         </div>
         <div class="form-group">
             <label for="textEdit">Текст новости</label>
